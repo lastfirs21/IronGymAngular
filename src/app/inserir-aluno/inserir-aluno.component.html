@@ -1,0 +1,51 @@
+
+
+<div class="container mb-2" >
+
+  <h2 class="font-weight-bold border-bottom" >{{title}}</h2>
+  <a class="btn btn-link" (click)="limparCampos()" > <i class="fa fa-close" aria-hidden="true"></i></a>
+  <form class="form form-row" (ngSubmit)="submit()">
+
+      <div class="form-group col-3">
+        <label for="nome"> Nome do Aluno</label>
+        <input class="form-control" id="nome" type="text" [(ngModel)]="aluno.nome" name="descricao" placeholder="Insira o Nome Aqui!" >
+      </div>
+      <div class="form-group col-3">
+        <label for="cpf"> CPF do Aluno</label>
+        <input  class="form-control" id="cpf" type="text" [(ngModel)]="aluno.cpf" name="cpf" mask="000.000.000-00" placeholder="(Opcional)" >
+      </div>
+      <div class="form-group col-3">
+        <label for="rg"> RG do ALuno</label>
+        <input  class="form-control" id="rg" type="text" [(ngModel)]="aluno.rg" name="rg" mask="00.000.000-0" placeholder="(Opcional)">
+      </div>
+      <div class="form-group col-3">
+        <label for="telefone"> Telefone</label>
+        <input  class="form-control" required id="telefone" type="text"  [(ngModel)]="aluno.telefone" name="telefone" mask="(00) 0 0000-0000" placeholder="(17) 9 9999-9999" />
+      </div>
+      <div class="form-group col-3">
+        <label for="dataNasc"> Data de Nascimento</label>
+        <input  class="form-control" required id="dataNasc"  type="datetime-local"  [(ngModel)]="aluno.dataNasc " name="dataNasc" >
+      </div>
+      <div class="form-group col-3">
+        <label for="personalId">Personal</label>
+        <select required [(ngModel)]="aluno.personalId" class="form-control" id="personalId" name="personalId" >
+          <option *ngFor="let personal of personais" [value]="personal.id" >{{personal.nome}}</option>
+        </select>
+      </div>
+      <div class="form-group col-3">
+        <label for="planoId">Plano</label>
+        <select required [(ngModel)]="aluno.planoId" class="form-control" id="planoId" name="planoId" >
+          <option *ngFor="let plano of planos" [value]="plano.id" >{{plano.descricao}}</option>
+        </select>
+      </div>
+      <div class="form-group col-3">
+
+        <label for="vencimentoMensalidade"> Vencimento Mensalidade</label>
+        <input  required class="form-control" id="vencimentoMensalidade" type="datetime-local" [ngModel]="aluno.vencimentoMensalidade  | date:'yyyy-MM-ddTHH:mm' " (ngModelChange)="aluno.vencimentoMensalidade  = dataChanged($event)" name="vencimentoMensalidade">
+      </div>
+    <button *ngIf="modoEdicao==false; else editMode;" class="btn btn-primary form-control" type="submit" name="submit" id="submit" value="Submit"><i class=" fa fa-plus" ></i></button>
+  </form>
+</div>
+<ng-template #editMode>
+    <button class="btn btn-info form-control" type="submit" name="submit" id="submit" value="Submit"> <i class=" fa fa-check" ></i> </button>
+</ng-template>

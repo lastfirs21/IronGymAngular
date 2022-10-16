@@ -1,0 +1,55 @@
+
+
+<div class="container mb-2">
+  <h2 class="font-weight-bold border-bottom">{{title}}</h2>
+  <a class="btn btn-link" (click)="limparCampos()" > <i class="fa fa-close" aria-hidden="true"></i></a>
+  <form  class="form form-row" (ngSubmit)="submit()">
+
+      <div class="form-group col-3">
+        <label for="alunoId">Aluno</label>
+        <select (change)="alteraAluno()"  [(ngModel)]="pagamento.alunoId" class="form-control" id="alunoId" name="alunoId" >
+          <option *ngFor="let aluno of alunos" [value]="aluno.id" >{{aluno.nome}}</option>
+        </select>
+      </div>
+      <div class="form-group col-2">
+        <label for="valorAdicionalPersonal">Valor Adicional Personal</label>
+        <input (change)="recalcularTotal()"  class="form-control text-danger font-weight-bold" id="valorAdicionalPersonal" type="number"  [(ngModel)]="pagamento.valorAdicionalPersonal" name="valorAdicionalPersonal">
+      </div>
+      <div class="form-group col-2">
+        <label for="desconto">Valor Desconto</label>
+        <input (change)="recalcularTotal()" type="number" min="0"  class="form-control" id="desconto"  [(ngModel)]="pagamento.desconto" name="desconto" >
+      </div>
+      <div class="form-group col-2">
+        <label for="formaPagamento">Forma de Pagamento</label>
+        <select [(ngModel)]="pagamento.formaPagamento" class="form-control" id="formaPagamento" name="formaPagamento" >
+          <option value="Dinheiro"  >Dinheiro</option>
+          <option value="Cartão de Crédito" >Cartão de Crédito</option>
+          <option value="Cartão de Débito" >Cartão de Débito</option>
+          <option value="Pix" >Pix</option>
+          <option value="Ted" >Ted</option>
+        </select>
+      </div>
+      <div class="form-group col-3">
+        <label for="observacoes">Observações</label>
+        <input  class="form-control" id="observacoes" type="text" [(ngModel)]="pagamento.observacoes" name="observacoes" placeholder="(Opcional)" >
+      </div>
+      <div class="font-weight-bold">
+        <p>Próximo Vencimento: <span style="color:red;"> {{pagamento.aluno?.vencimentoMensalidade | date: "shortDate"}}</span>  </p>
+
+        <p *ngIf="pagamento.aluno?.plano != null; else buttonPlano">Plano Atual: <span  style="color:red;">  {{pagamento.aluno?.plano?.descricao}}  </span></p>
+
+        <p>Personal:  <span style="color:red;">  {{pagamento.aluno?.personal?.nome}}  </span></p>
+        <p>Valor Do Plano:  <span style="color:red;">  {{pagamento.aluno?.plano?.valor | currency: "BRL"}} </span> </p>
+        <p>Valor Total:  <span style="color:red;">  {{pagamento.valorTotal | currency: "BRL"}}  </span></p>
+      </div>
+        <button *ngIf="modoEdicao == false; else editMode;" class="btn btn-primary form-control" type="submit" name="submit" id="submit" value="Submit"> <i class=" fa fa-plus" ></i> </button>
+  </form>
+</div>
+
+
+<ng-template #editMode>
+  <button class="btn btn-info form-control" type="submit" name="submit" id="submit" value="Submit"> <i class=" fa fa-check" ></i> </button>
+</ng-template>
+<ng-template #buttonPlano>
+ <p> Plano Atual:  <a routerLink="../listar-planos" routerLinkActive="ativo"  >Inserir Plano </a></p>
+</ng-template>

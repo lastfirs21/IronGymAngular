@@ -1,0 +1,40 @@
+
+
+    <div class="container">
+      <app-inserir-pagamento [eventAdd]="addSubject"  [eventExclude]="excludeSubject.asObservable()"   [eventEdit]="editSubject.asObservable()" (atualizarLista)="adcionar()" ></app-inserir-pagamento>
+    </div>
+
+    <div class="container table-responsive ">
+
+      <table class="table table-striped " >
+        <thead class="thead">
+          <tr>
+            <th scope="col">Aluno</th>
+            <th scope="col">Data do Pagamento</th>
+            <th scope="col">Desconto</th>
+            <th scope="col">Valor Personal</th>
+            <th scope="col">Forma de Pagamento</th>
+            <th scope="col">Observações</th>
+            <th scope="col">Total</th>
+            <th scope="col">Opções</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pagamento of pagamentos">
+            <td class="col-2" >{{ pagamento?.aluno?.nome }}</td>
+            <td>{{ pagamento?.dataDoPagamento | date: "shortDate" }}</td>
+            <td>{{ pagamento?.desconto | currency: "BRL" }}</td>
+            <td>{{ pagamento?.valorAdicionalPersonal | currency: "BRL" }}</td>
+            <td>{{ pagamento?.formaPagamento  }}</td>
+            <td class="col-3" >{{ pagamento?.observacoes }}</td>
+            <td>{{ pagamento?.valorTotal | currency: "BRL" }}</td>
+            <td class="col-2" >
+              <button *ngIf="modoEdicao == false" (click)="excluir(pagamento.id)" class="btn btn-danger mr-1"><i class="fa fa-trash" aria-hidden="true"></i></button>
+              <button (click)="editar(pagamento)" class="btn btn-secondary"> <i class="fa fa-pencil" aria-hidden="true"></i> </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+
+    </div>

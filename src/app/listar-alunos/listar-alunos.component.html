@@ -1,0 +1,43 @@
+<div>
+  <app-inserir-aluno [events]="eventsSubject.asObservable()" (atualizarLista)="adicionar()" ></app-inserir-aluno>
+</div>
+
+    <div class="container table-responsive">
+      <div class="container row mb-1">
+        <button   class="btn btn-outline-danger mr-1 col-1" (click)="limparVariaveis()">  <i class="fa fa-close" aria-hidden="true"></i> </button>
+        <button   class="btn btn-outline-info mr-1 col-2" (click)="listarVencidos()"  >LISTAR VENCIDOS</button>
+        <button   class="btn btn-outline-info mr-1 col-2" (click)="listarInativos()"  >LISTAR INATIVOS</button>
+        <button   class="btn btn-outline-info mr-1 col-2" (click)="listarPorNome()"  >LISTAR POR NOME</button>
+        <input placeholder="Busque Por Nome!" class="form-control ml-5 col-4" [(ngModel)]="searchBox" (ngModelChange)="buscarPorNome()"   />
+      </div>
+      <table  class="table table-striped">
+        <thead class="thead">
+          <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Telefone</th>
+            <th scope="col">Vencimento</th>
+            <th scope="col">Personal</th>
+            <th scope="col">Plano</th>
+            <th scope="col">Opções</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let aluno of alunos"   [ngClass]="{'inativo': aluno.status == 'Inativo'}" >
+            <td>{{ aluno?.nome }}</td>
+            <td>{{ aluno.telefone | mask:"(00) 0 0000-0000" }}</td>
+
+            <td [ngClass]="{'vencido': aluno.statusMensalidade == 'Vencido'} ">
+              {{ aluno.vencimentoMensalidade | date: "shortDate" }}
+            </td>
+
+            <td>{{ aluno?.personal?.nome }}</td>
+            <td>{{ aluno?.plano?.descricao }}</td>
+            <td >
+              <button *ngIf="modoEdicao == false" (click)="excluir(aluno.id)" class="btn btn-danger mr-1"><i class="fa fa-trash" aria-hidden="true"></i></button>
+              <button (click)="editar(aluno)"  class="btn btn-secondary mr-1"> <i class="fa fa-pencil" aria-hidden="true"></i> </button>
+              <button (click)="gerarPagamento(aluno.id)"  class="btn btn-success"> <i class="fa fa-money" aria-hidden="true"></i> </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>

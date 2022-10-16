@@ -1,0 +1,35 @@
+<div class="">
+  <div >
+    <div class="container">
+      <app-inserir-despesa  [events]="eventsSubject.asObservable()" (atualizarLista)="adcionar()" ></app-inserir-despesa>
+    </div>
+  </div>
+  <div class="">
+    <div class="container">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Observações</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Forma de Pagamento</th>
+            <th scope="col">Data do Pagamento</th>
+            <th scope="col"> Opções</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let despesa of despesas">
+            <td >{{ despesa?.observacoes  }}</td>
+            <td >{{ despesa.valor  | currency: "BRL" }}</td>
+            <td  >{{ despesa.formaPagamento  }}</td>
+            <td  >{{ despesa.dataDoPagamento  | date: "shortDate"  }}</td>
+            <td >
+              <button *ngIf="modoEdicao == false" (click)="excluir(despesa.id)" class="btn btn-danger mr-1"><i class="fa fa-trash" aria-hidden="true"></i></button>
+              <button (click)="editar(despesa)" class="btn btn-secondary"> <i class="fa fa-pencil" aria-hidden="true"></i> </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
