@@ -1,0 +1,107 @@
+<div class="container text-center bg-white">
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    data-keyboard="false"
+    data-backdrop="static"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ title }}</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+            (click)="limparCampos()"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <form class="form pb-2 row justify-content-around m-2">
+            <input
+              class="form-control mb-1"
+              id="observacoes"
+              type="text"
+              [(ngModel)]="despesa.observacoes"
+              name="observacoes"
+              placeholder="Observações"
+            />
+            <label for="valor">Valor</label>
+            <input
+              class="form-control"
+              id="valor"
+              type="number"
+              min="0"
+              [(ngModel)]="despesa.valor"
+              name="valor"
+            />
+
+            <label for="formaPagamento">Forma de Pagamento</label>
+            <select
+              [(ngModel)]="despesa.formaPagamento"
+              class="form-control"
+              id="formaPagamento"
+              name="formaPagamento"
+            >
+              <option value="Dinheiro">Dinheiro</option>
+              <option value="Cartão de Crédito">Cartão de Crédito</option>
+              <option value="Cartão de Débito">Cartão de Débito</option>
+              <option value="Pix">Pix</option>
+              <option value="Ted">Ted</option>
+            </select>
+
+            <div class="text-center">
+            <label for="dataDoPagamento">Data do Pagamento</label>
+            <input
+              class="form-control"
+              required
+              id="dataDoPagamento"
+              type="datetime-local"
+              [ngModel]="despesa.dataDoPagamento | date: 'yyyy-MM-ddTHH:mm'"
+              (ngModelChange)="despesa.dataDoPagamento = dataChanged($event)"
+              name="dataDoPagamento"
+            />
+
+            <button
+              *ngIf="!modoEdicao; else editMode"
+              class="btn btn-primary form-control mt-2"
+              type="submit"
+              name="submit"
+              id="submit"
+              value="Submit"
+              (click)="submit()"
+            >
+              <i class="fa fa-plus-circle"></i>
+            </button>
+          </div>
+          </form>
+        </div>
+
+      <div class="modal-footer text-center">
+        <p class="text-danger">- {{ errorMessage }}</p>
+      </div>
+      </div>
+      </div>
+
+      <ng-template #editMode>
+        <button
+          class="btn btn-debug bg-success form-control"
+          type="submit"
+          name="submit"
+          id="submit"
+          value="Submit"
+          data-dismiss="modal"
+          (click)="submit()"
+        >
+          <i class="fa fa-check-circle"></i>
+        </button>
+      </ng-template>
+

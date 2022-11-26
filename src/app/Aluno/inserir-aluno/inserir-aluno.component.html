@@ -1,0 +1,170 @@
+<div class="container text-center bg-white">
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    data-keyboard="false"
+    data-backdrop="static"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ title }}</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+            (click)="limparCampos()"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form pb-2 row justify-content-around m-2">
+            <input
+              class="form-control mb-1"
+              id="nome"
+              type="text"
+              [(ngModel)]="aluno.nome"
+              name="descricao"
+              placeholder="Nome"
+            />
+            <input
+              class="form-control mb-1"
+              required
+              id="telefone"
+              type="text"
+              [(ngModel)]="aluno.telefone"
+              (change)="verificaTelefone()"
+              name="telefone"
+              mask="(00) 0 0000-0000"
+              placeholder="Celular"
+            />
+            <p class="text-danger" *ngIf="telCadastrado; else telNaoCadastrado">
+              {{ "Telefone Já Cadastrado Para: " + telCadastrado.nome }}
+            </p>
+            <input
+              class="form-control mb-1"
+              id="cpf"
+              type="text"
+              [(ngModel)]="aluno.cpf"
+              name="cpf"
+              mask="000.000.000-00"
+              placeholder="CPF"
+            />
+            <input
+              class="form-control"
+              id="rg"
+              type="text"
+              [(ngModel)]="aluno.rg"
+              name="rg"
+              mask="00.000.000-0"
+              placeholder="RG"
+            />
+
+            <div class="justify-content-around">
+              <label class="p-2" for="planoId"
+                >Plano
+                <select
+                  required
+                  [(ngModel)]="aluno.planoId"
+                  class="form-control"
+                  id="planoId"
+                  name="planoId"
+                >
+                  <option *ngFor="let plano of planos" [value]="plano.id">
+                    {{ plano.descricao }}
+                  </option>
+                </select>
+              </label>
+
+              <label class=" p-2" for="personalId"
+                >Personal
+                <select
+                  required
+                  [(ngModel)]="aluno.personalId"
+                  class="form-control"
+                  id="personalId"
+                  name="personalId"
+                >
+                  <option
+                    *ngFor="let personal of personais"
+                    [value]="personal.id"
+                  >
+                    {{ personal.nome }}
+                  </option>
+                </select>
+              </label>
+            </div>
+            <div class="justify-content-between">
+              <label class="p-2" for="dataNasc">
+                Data de Nascimento
+                <input
+                  class="form-control"
+                  required
+                  id="dataNasc"
+                  type="date"
+                  [(ngModel)]="aluno.dataNasc"
+                  name="dataNasc"
+                />
+              </label>
+
+              <label class="p-2" for="vencimentoMensalidade">
+                Vencimento Mensalidade
+                <input
+                  required
+                  class="form-control"
+                  id="vencimentoMensalidade"
+                  type="date"
+                  [ngModel]="aluno.vencimentoMensalidade | date: 'yyyy-MM-dd'"
+                  (ngModelChange)="
+                    aluno.vencimentoMensalidade = $event
+                  "
+                  name="vencimentoMensalidade"
+                />
+              </label>
+
+              <button
+                *ngIf="modoEdicao == false; else editMode"
+                class="btn btn-primary form-control"
+                type="submit"
+                name="submit"
+                id="submit"
+                value="Submit"
+                (click)="submit()"
+              >
+                <i class="fa fa-plus-circle"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer text-center">
+          <p class="text-danger">- {{ errorMessage }}</p>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #telNaoCadastrado>
+      <p class="text-sucess">Telefone Ainda Não Cadastrado!</p>
+    </ng-template>
+
+    <ng-template #editMode>
+      <button
+        class="btn btn-debug bg-success form-control"
+        type="submit"
+        name="submit"
+        id="submit"
+        value="Submit"
+        (click)="submit()"
+        data-dismiss="modal"
+      >
+        <i class="fa fa-check-circle"></i>
+      </button>
+    </ng-template>
+  </div>
+</div>

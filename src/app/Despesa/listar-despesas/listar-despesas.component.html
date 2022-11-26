@@ -1,0 +1,81 @@
+<div class="container" style="font-size: 14px">
+  <div class="row mt-2 mb-1">
+    <div class="col-12 mb-2">
+      <div class="row justify-content-end">
+        <button
+          type="button"
+          class="btn btn-primary col-1"
+          type="button"
+          class="btn btn-primary"
+          data-toggle="modal"
+          data-target="#exampleModal"
+          (click)="desEdit()"
+        >
+          <i class="fa fa-plus-circle"></i>
+        </button>
+      </div>
+    </div>
+
+      <table class="table table-responsive-md">
+        <thead class="thead">
+          <tr>
+            <th scope="col">Observações</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Forma de Pagamento</th>
+            <th scope="col">Data do Pagamento</th>
+            <th scope="col">Opções</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let despesa of despesas
+                | slice: (page - 1) * pageSize:page * pageSize
+            "
+          >
+            <td>{{ despesa?.observacoes }}</td>
+            <td>{{ despesa.valor | currency: "BRL" }}</td>
+            <td>{{ despesa.formaPagamento }}</td>
+            <td>{{ despesa.dataDoPagamento | date: "shortDate" }}</td>
+            <td>
+              <a
+                *ngIf="modoEdicao == false"
+                (click)="excluir(despesa.id)"
+                class="text-danger mr-2"
+                ><i class="fa fa-trash" aria-hidden="true"></i
+              ></a>
+              <a
+                (click)="editar(despesa)"
+                data-toggle="modal"
+                data-target="#exampleModal"
+              >
+                <i class="fa fa-pencil text-secondary" aria-hidden="true"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row text-center">
+      <div class="col-4">
+        <button class="btn btn-link" (click)="previousPage()">
+          <i class="fa fa-arrow-left"></i>
+        </button>
+      </div>
+      <div class="col-4">
+        <p>
+          {{ page }}
+        </p>
+      </div>
+      <div class="col-4">
+        <button class="btn btn-link" (click)="nextPage()">
+          <i class="fa fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-inserir-despesa
+    [events]="eventsSubject.asObservable()"
+    (atualizarLista)="adcionar()"
+  ></app-inserir-despesa>

@@ -1,0 +1,170 @@
+<div class="container text-center bg-white">
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    data-keyboard="false"
+    data-backdrop="static"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ title }}</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+            (click)="limparCampos()"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form row justify-content-around m-2 pb-2">
+            <div class="row">
+              <div class="col-12">
+                <label for="alunoId">Aluno</label>
+                <select
+                  (change)="alteraAluno()"
+                  [(ngModel)]="pagamento.alunoId"
+                  class="form-control"
+                  id="alunoId"
+                  name="alunoId"
+                >
+                  <option *ngFor="let aluno of alunos" [value]="aluno.id">
+                    {{ aluno.nome }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-12 mb-1">
+                <label for="formaPagamento">Forma de Pagamento</label>
+                <select
+                  [(ngModel)]="pagamento.formaPagamento"
+                  class="form-control"
+                  id="formaPagamento"
+                  name="formaPagamento"
+                >
+                  <option value="Dinheiro">Dinheiro</option>
+                  <option value="Cartão de Crédito">Cartão de Crédito</option>
+                  <option value="Cartão de Débito">Cartão de Débito</option>
+                  <option value="Pix">Pix</option>
+                  <option value="Ted">Ted</option>
+                </select>
+              </div>
+
+              <div class="col-6">
+                <label for="valorAdicionalPersonal">Valor Personal</label>
+                <input
+                  (change)="recalcularTotal()"
+                  class="form-control text-danger font-weight-bold"
+                  id="valorAdicionalPersonal"
+                  type="number"
+                  [(ngModel)]="pagamento.valorAdicionalPersonal"
+                  name="valorAdicionalPersonal"
+                />
+              </div>
+              <div class="col-6">
+                <label for="desconto">Valor do Desconto</label>
+                <input
+                  (change)="recalcularTotal()"
+                  type="number"
+                  min="0"
+                  class="form-control"
+                  id="desconto"
+                  [(ngModel)]="pagamento.desconto"
+                  name="desconto"
+                />
+              </div>
+
+              <input
+                class="form-control col-12 text-center mt-1"
+                id="observacoes"
+                type="text"
+                [(ngModel)]="pagamento.observacoes"
+                name="observacoes"
+                placeholder="Observações"
+              />
+
+              <button
+                *ngIf="modoEdicao == false; else editMode"
+                class="btn btn-primary form-control mt-2"
+                type="submit"
+                name="submit"
+                id="submit"
+                value="Submit"
+                (click)="submit()"
+              >
+                <i class="fa fa-plus-circle"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer text-center">
+          <p class="text-danger">- {{ errorMessage }}</p>
+        </div>
+
+        <div class="font-weight-bold row">
+          <p class="col-12">
+        Vencimento:
+        <span style="color: red">
+          {{ pagamento.aluno?.vencimentoMensalidade | date: "shortDate" }}</span
+          >
+        </p>
+
+        <p class="col-6" *ngIf="pagamento.aluno?.plano != null; else buttonPlano">
+          Plano :
+          <span style="color: red">
+            {{ pagamento.aluno?.plano?.descricao }}
+          </span>
+        </p>
+
+        <p class="col-6">
+          Personal:
+          <span style="color: red">
+            {{ pagamento.aluno?.personal?.nome }}
+          </span>
+        </p>
+        <p class="col-6">
+          Valor Do Plano:
+          <span style="color: red">
+            {{ pagamento.aluno?.plano?.valor | currency: "BRL" }}
+          </span>
+        </p>
+        <p class="col-6">
+          Valor Total:
+          <span style="color: red">
+            {{ pagamento.valorTotal | currency: "BRL" }}
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+    <ng-template #editMode>
+      <button
+        class="btn btn-debug bg-success form-control"
+        type="submit"
+        name="submit"
+        id="submit"
+        value="Submit"
+        data-dismiss="modal"
+        (click)="submit()"
+      >
+        <i class="fa fa-check-circle"></i>
+      </button>
+    </ng-template>
+
+    <ng-template #buttonPlano>
+      <p>
+        Plano Atual:
+        <a routerLink="../listar-planos" routerLinkActive="ativo"
+          >Inserir Plano
+        </a>
+      </p>
+    </ng-template>
+  </div>
+</div>

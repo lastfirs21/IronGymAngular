@@ -1,0 +1,16 @@
+.credito{
+  color: green;
+
+}
+.debito{
+  color: red;
+
+}
+
+.btn-block:hover{
+  background-color: darkgray;
+}
+td{
+  font-weight: bolder;
+}
+

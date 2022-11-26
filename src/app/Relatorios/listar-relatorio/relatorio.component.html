@@ -1,0 +1,124 @@
+<div class="container row" style="font-size: 14px">
+  <div class="col-9">
+    <div class="row mt-2 mb-1">
+      <table class="table table-responsive-md ">
+        <thead class="thead">
+          <tr>
+            <th scope="col">Tipo</th>
+            <th scope="col">Observações</th>
+            <th scope="col">Forma de Pagamento</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Data</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let lancamento of relatorio?.lancamentos  | slice: (page - 1) * pageSize:page * pageSize"
+            [ngClass]="{
+              credito: lancamento.tipo == 'Crédito',
+              debito: lancamento.tipo == 'Débito'
+            }"
+          >
+            <td>{{ lancamento.tipo }}</td>
+            <td>{{ lancamento.observacoes }}</td>
+            <td>{{ lancamento.formaPagamento }}</td>
+            <td>{{ lancamento.valor | currency: "BRL" }}</td>
+            <td>{{ lancamento.dataDoPagamento | date: "short" }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row text-center">
+      <div class="col-4">
+        <button class="btn btn-link" (click)="previousPage()">
+          <i class="fa fa-arrow-left"></i>
+        </button>
+      </div>
+      <div class="col-4">
+        <p>
+          {{ page }}
+        </p>
+      </div>
+      <div class="col-4">
+        <button class="btn btn-link" (click)="nextPage()">
+          <i class="fa fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-3">
+    <div class="position-fixed">
+      <div class="container mt-2 pb-2 rounded text-center shadow-lg">
+        <h3 class="border-bottom font-weight-light">Relatório <br> {{( dataInicio | date:"shortDate")+ " a " + ( dataFim| date:"shortDate")  }}</h3>
+        <div class="row">
+          <div class="col-12">
+            <p class="text-muted">Defina o Período a Pesquisar</p>
+          </div>
+          <div class="col-6">
+            <input
+              [(ngModel)]="dataInicio"
+              (change)="buscarPeriodo()"
+              type="date"
+              class="form-control"
+              id="mesAtual"
+              name="mesAtual"
+            />
+          </div>
+          <div class="col-6">
+            <input
+              [(ngModel)]="dataFim"
+              (change)="buscarPeriodo()"
+              type="date"
+              class="form-control"
+              id="anoAtual"
+              name="anoAtual"
+            />
+          </div>
+          <h4 class="col-12 border-bottom mt-2">
+            Caixa Atual: {{ relatorio?.caixaAtual | currency: "BRL" }}<br />
+          </h4>
+
+          <h4 class="col-12">Créditos</h4>
+          <div class="col-4">
+            Recebimentos:  <i class="fa fa-question" (click)="recebimentos()"> </i> <br /> {{ relatorio?.totalRecebimentos | currency: "BRL" }}
+          </div>
+          <div class="col-4">
+            Planos: <i class="fa fa-question" (click)="planos()"> </i> <br /> {{ relatorio?.totalPlanos | currency: "BRL" }}
+          </div>
+          <div class="col-4">
+            Personais: <i class="fa fa-question" (click)="personais()"> </i> <br /> {{ relatorio?.totalPersonal | currency: "BRL" }}
+          </div>
+          <p class="col-6 font-weight-bold mt-2">
+            Total A Receber:  <i class="fa fa-question" (click)="aReceber()"> </i> <br /> {{ relatorio?.aReceber | currency: "BRL" }}<br />
+          </p>
+          <p class="col-6 font-weight-bold mt-2">
+           Total Recebido: <i class="fa fa-question" (click)="recebido()"> </i>  <br /> {{ relatorio?.total | currency: "BRL" }}<br />
+          </p>
+
+          <h4 class="col-12 border-top">Débitos</h4>
+          <div class="col-6">
+            Despesas: <i class="fa fa-question" (click)="despesas()"> </i> <br />{{ relatorio?.totalDespesas | currency: "BRL" }}
+          </div>
+          <div class="col-6">
+            Descontos: <i class="fa fa-question" (click)="descontos()" >   </i> <br /> {{ relatorio?.totalDescontos | currency: "BRL" }}
+          </div>
+
+          <h4 class="col-12 border-top mt-2">Balanço</h4>
+          <div class="col-6">
+            Período: <i class="fa fa-question" (click)="relatorioTotal()" >  </i> <br />
+            {{ relatorio?.balancoMensal | currency: "BRL" }}
+          </div>
+          <div class="col-6">
+            Fechamento:  <i class="fa fa-question" (click)="relatorioFechamento()" >   </i> <br> {{ relatorio?.balancoTotal | currency: "BRL" }}
+          </div>
+
+          <h4 class="col-12 border-top">Alunos</h4>
+          <div class="col-4">Este Mês: {{ relatorio?.cadastrosMes }}</div>
+          <div class="col-4">Total: {{ relatorio?.usuariosCadastrados }}</div>
+          <div class="col-4">Inativos: {{ relatorio?.usuariosInativos }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

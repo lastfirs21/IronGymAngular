@@ -1,28 +1,57 @@
+   <div class="position-relative" >
+     <ul class=" nav nav-justified ">
 
-  <div >
-    <ul class="nav nav-tabs justify-content-center">
-      <li class="nav-item">
-        <a class="nav-link " routerLink="listar-alunos" routerLinkActive="ativo">Alunos</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="listar-planos" routerLinkActive="ativo">Planos</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="listar-personais" routerLinkActive="ativo">Personais</a>
-      </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="listar-pagamentos" routerLinkActive="ativo">Pagamentos</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="listar-despesas" routerLinkActive="ativo">Despesas</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="relatorio" routerLinkActive="ativo">Relatórios</a>
-    </li>
-    <li><img src="../assets/iron-gym-anilha.png" width="200px"  /></li>
+       <li [routerLinkActive]="['active']" class="nav-item">
+         <a class="nav-link"  [routerLink]="['pagina-inicial']">
+              <i  class="fa fa-home"> Ínicio
+              </i>
+            </a>
+          </li>
+          <li [routerLinkActive]="['active']" class="nav-item">
+            <a class="nav-link" [routerLink]="['listar-alunos']">
+              <i class="fa fa-user"> Alunos
 
-  </ul>
-</div>
-<main >
-  <router-outlet></router-outlet>
-</main>
+              </i>
+            </a>
+          </li>
+          <li [routerLinkActive]="['active']" class="nav-item">
+            <a class="nav-link" [routerLink]="['listar-planos']">
+              <fa-icon [icon]="dumbellIcon"> </fa-icon> Planos
+            </a>
+          </li>
+          <li [routerLinkActive]="['active']" class="nav-item">
+            <a class="nav-link" [routerLink]="['listar-personais']">
+              <fa-icon [icon]="chalkBoardUser"></fa-icon> Personais
+            </a>
+          </li>
+          <li [routerLinkActive]="['active']" class="nav-item">
+            <a class="nav-link navbar-" [routerLink]="['listar-pagamentos']">
+              <fa-icon [icon]="sackDollar"></fa-icon> Pagamentos
+            </a>
+          </li>
+          <li [routerLinkActive]="['active']" class="nav-item">
+            <a class="nav-link" [routerLink]="['listar-recebimentos']">
+              <fa-icon [icon]="moneyBill"></fa-icon> Recebimentos
+            </a>
+          </li>
+          <li [routerLinkActive]="['active']" class="nav-item">
+            <a class="nav-link" [routerLink]="['listar-despesas']">
+              <fa-icon style="color: red" [icon]="dollarSign"></fa-icon> Despesas
+            </a>
+          </li>
+          <li [routerLinkActive]="['active']" class="nav-item">
+            <a class="nav-link" [routerLink]="['relatorio']">
+              <fa-icon [icon]="fileChart"></fa-icon> Relatório
+            </a>
+          </li>
+        </ul>
+      </div>
+
+  <main >
+    <router-outlet></router-outlet>
+
+
+
+  </main>
+
+

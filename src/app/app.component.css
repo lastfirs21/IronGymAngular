@@ -1,6 +1,25 @@
-.background{
-  background-image: url(../assets/iron-gym-anilha.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+.nav-link:hover{
+  color: gray;
 }
+
+.active{
+  background-color: rgba(255,255,255,0.3);;
+  border-radius: 20px;
+  border: solid 2px transparent;
+}
+
+
+
+.nav-link{
+  color:white;
+}
+
+
+.nav{
+  background-color: black;
+  min-height: 100% ;
+}
+
+
+
+

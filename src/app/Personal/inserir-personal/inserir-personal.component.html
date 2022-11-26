@@ -1,0 +1,101 @@
+<div class="container text-center bg-white">
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    data-keyboard="false"
+    data-backdrop="static"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ title }}</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+            (click)="limparCampos()"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <form class="form pb-2 row justify-content-around m-2">
+      <input
+        class="form-control col-12 mb-1"
+        id="nome"
+        type="text"
+        [(ngModel)]="personal.nome"
+        name="nome"
+        placeholder="Nome"
+      />
+      <input
+        class="form-control col-6"
+        id="cpf"
+        type="text"
+        [(ngModel)]="personal.cpf"
+        name="cpf"
+        placeholder="CPF"
+        mask="000.000.000-00"
+        placeholder="CPF"
+      />
+
+      <input
+        class="form-control col-6"
+        id="telefone"
+        type="text"
+        [(ngModel)]="personal.telefone"
+        name="telefone"
+        placeholder="Telefone"
+        mask="(00) 0 0000-0000"
+        placeholder="Telefone"
+      />
+
+        <label for="valor">Valor Mensal</label>
+        <input
+          min="0"
+          class="form-control"
+          id="valor"
+          type="number"
+          [(ngModel)]="personal.valor"
+          name="valor"
+          placeholder="Valor"
+        />
+
+        <button
+          *ngIf="!modoEdicao; else editMode"
+          class="btn btn-primary form-control mt-2"
+          type="submit"
+          name="submit"
+          id="submit"
+          value="Submit"
+          (click)="submit()"
+        >
+          <i class="fa fa-plus-circle"></i>
+        </button>
+  </form>
+</div>
+<div class="modal-footer text-center">
+  <p class="text-danger">- {{ errorMessage }}</p>
+</div>
+</div>
+</div>
+
+<ng-template #editMode>
+  <button
+    class="btn btn-debug bg-success form-control"
+    type="submit"
+    name="submit"
+    id="submit"
+    value="Submit"
+    data-dismiss="modal"
+    (click)="submit()"
+  >
+    <i class="fa fa-check-circle"></i>
+  </button>
+</ng-template>

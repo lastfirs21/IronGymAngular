@@ -1,0 +1,91 @@
+<div class="container text-center bg-white">
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    data-keyboard="false"
+    data-backdrop="static"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ title }}</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+            (click)="limparCampos()"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <form class="form pb-2 row justify-content-around m-2">
+    <div class="row">
+      <input
+        class="form-control col-12 mb-1"
+        id="descricao"
+        type="text"
+        [(ngModel)]="plano.descricao"
+        name="descricao"
+        placeholder="Descrição"
+      />
+        <label for="mesesPlano">Período (Meses)</label>
+        <input
+          class="form-control"
+          id="mesesPlano"
+          min="0"
+          max="12"
+          type="number"
+          [(ngModel)]="plano.mesesPlano"
+          name="mesesPlano"
+        />
+        <label for="valor">Valor</label>
+        <input
+          class="form-control"
+          id="valor"
+          min="0"
+          type="number"
+          [(ngModel)]="plano.valor"
+          name="valor"
+        />
+      <button
+      *ngIf="!modoEdicao; else editMode"
+      class="btn btn-primary form-control mt-2"
+      type="submit"
+      name="submit"
+      id="submit"
+      value="Submit"
+      (click)="submit()"
+    >
+      <i class="fa fa-plus-circle"></i>
+    </button>
+    </div>
+</form>
+</div>
+<div class="modal-footer text-center">
+<p class="text-danger">- {{ errorMessage }}</p>
+</div>
+</div>
+</div>
+
+<ng-template #editMode>
+<button
+class="btn btn-debug bg-success form-control"
+type="submit"
+name="submit"
+id="submit"
+value="Submit"
+data-dismiss="modal"
+(click)="submit()"
+>
+<i class="fa fa-check-circle"></i>
+</button>
+</ng-template>
+
+
